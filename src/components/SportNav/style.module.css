@@ -1,0 +1,47 @@
+.container {
+    display: inline-block;
+    height: 100vh;
+    width: 117px;
+    background-color: black;
+}
+
+.icon_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 40%;
+    margin-top: 20vh;
+}
+
+.icon {
+    width: 64px;
+    margin-bottom: 20px;
+}
+
+.copyright {
+    display: inline-block;
+    transform: rotate(-90deg);
+    color: white;
+    font-size: 0.75rem;
+    width: 138px;
+    margin-top: 20vh;
+    margin-left: -5%;
+}
+
+@media screen and (max-width: 1024px) {
+
+    .container {
+        width: 90px;
+    }
+
+    .icon {
+        width: 50px;
+        margin-bottom: 12px;
+
+    }
+
+    .copyright {
+        margin-left: -20%;
+    }
+}

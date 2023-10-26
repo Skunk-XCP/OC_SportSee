@@ -1,0 +1,50 @@
+.app_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard_container {
+    width: 100%;
+}
+
+.user_stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.user_graphs {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.user_weight {
+    height: 20vh;
+}
+
+.user_trendBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 20vh;
+    padding-top: 15px;
+
+}
+
+.user_objectives,
+.user_radar,
+.user_kpi {
+    padding: 5px;
+    width: 30%;
+}
+
+.user_objectives {}
+
+.user_radar {}
+
+.user_kpi {}
+
+.user_nutrition {
+    width: 30%;
+}
