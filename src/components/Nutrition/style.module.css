@@ -1,0 +1,36 @@
+.user_nutrition {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 18%;
+}
+
+.nutrition_category {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FBFBFB;
+    height: 12.5vh;
+    margin-bottom: 3%;
+    border-radius: 10px;
+}
+
+.icon {
+    height: 3.75rem;
+    width: 3.75rem;
+}
+
+.nutrition_infos {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+}
+
+.unity {
+    font-size: 1.2rem;
+    font-family: "Roboto-Bold";
+}
+
+.macronutriment {
+    color: #74798C;
+}
