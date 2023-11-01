@@ -1,7 +1,7 @@
 import s from "./style.module.css";
 import logo from "../../assets/images/logo.png"
 
-export function TopMenu() {
+export function Header() {
     return (
         <>
             <div className={s.container}>

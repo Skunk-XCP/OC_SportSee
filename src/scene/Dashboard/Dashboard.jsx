@@ -1,16 +1,38 @@
+import { useState, useEffect } from "react";
+import { DataAPI } from "../../api/APIService";
 import { Nutrition } from "../../components/Nutrition/Nutrition";
 import { SportNav } from "../../components/SportNav/SportNav";
-import { TopMenu } from "../../components/TopMenu/TopMenu";
+import { Header } from "../../components/Header/Header";
 import s from "./style.module.css";
 
-export function Dashboard() {
+export function Dashboard({ user }) {
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        async function getName() {
+            try {
+                const userFirstName = await DataAPI.getUsers(user);
+                console.log(userFirstName.data.userInfos.firstName);
+                setUserName(userFirstName.data.userInfos.firstName);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getName();
+    }, [user]);
+
+
     return (
         <>
-            <TopMenu />
+            <Header />
             <div className={s.app_container}>
                 <SportNav />
                 <section className={s.dashboard_container}>
-                    <h1 className={s.user_name}>User Name</h1>
+                    <h1 className={s.user_name_bloc}>
+                        Bonjour
+                        <span className={s.user_name}>{userName}</span>
+                    </h1>
                     <p className={s.support_line}>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
                     <div className={s.user_stats}>
                         <div className={s.user_graphs}>
