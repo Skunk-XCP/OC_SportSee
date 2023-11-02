@@ -4,6 +4,7 @@ import { Nutrition } from "../../components/Nutrition/Nutrition";
 import { SportNav } from "../../components/SportNav/SportNav";
 import { Header } from "../../components/Header/Header";
 import s from "./style.module.css";
+import { DailyActivity } from "../../components/DailyActivity/DailyActivity";
 
 export function Dashboard({ user }) {
     const [userName, setUserName] = useState("");
@@ -12,7 +13,7 @@ export function Dashboard({ user }) {
         async function getName() {
             try {
                 const userFirstName = await DataAPI.getUsers(user);
-                console.log(userFirstName.data.userInfos.firstName);
+                console.log("Toutes les données disponibles: ", userFirstName);
                 setUserName(userFirstName.data.userInfos.firstName);
             } catch (error) {
                 console.error(error);
@@ -36,7 +37,9 @@ export function Dashboard({ user }) {
                     <p className={s.support_line}>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
                     <div className={s.user_stats}>
                         <div className={s.user_graphs}>
-                            <div className={s.user_weight}>weight</div>
+                            <div className={s.user_weight}>
+                                <DailyActivity user={user} />
+                            </div>
                             <div className={s.user_trendBox}>
                                 <div className={s.user_objectives}>Objectifs</div>
                                 <div className={s.user_radar}>Radar</div>

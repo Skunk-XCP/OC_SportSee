@@ -29,6 +29,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 100px;
 }
 
 .user_graphs {
@@ -38,7 +39,8 @@
 }
 
 .user_weight {
-    height: 20vh;
+    width: 100%;
+    height: 400px;
 }
 
 .user_trendBox {
@@ -57,8 +59,8 @@
     width: 30%;
 }
 
-.user_objectives {}
+/* .user_objectives {}
 
 .user_radar {}
 
-.user_kpi {}
+.user_kpi {} */
