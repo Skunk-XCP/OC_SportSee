@@ -65,9 +65,6 @@ export function DailyActivity({ user }) {
         );
     };
 
-    // Étiquettes pour l'axe X
-    const customXAxis = ['1', '2', '3', '4', '5', '6', '7'];
-
     // Rendu JSX pour afficher le composant
     return (
         <>
@@ -76,13 +73,14 @@ export function DailyActivity({ user }) {
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={activity} barGap={10}>
                         <CartesianGrid strokeDasharray="1" vertical={false} />
+
                         <XAxis
-                            dataKey={customXAxis.value}
+                            dataKey="day"
                             stroke="#9B9EAC"
                             tickLine={false}
                             axisLine={false}
                             tickMargin={15}
-                            tickFormatter={(index) => customXAxis[index]}
+                            tickFormatter={(value) => new Date(value).getDate()}
                         />
 
                         <YAxis

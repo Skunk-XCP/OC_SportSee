@@ -13,7 +13,7 @@ export function Dashboard({ user }) {
         async function getName() {
             try {
                 const userFirstName = await DataAPI.getUsers(user);
-                console.log("Toutes les données disponibles: ", userFirstName);
+                // console.log("Toutes les données disponibles: ", userFirstName);
                 setUserName(userFirstName.data.userInfos.firstName);
             } catch (error) {
                 console.error(error);
@@ -47,7 +47,7 @@ export function Dashboard({ user }) {
                             </div>
                         </div>
 
-                        <Nutrition />
+                        <Nutrition user={user} />
 
                     </div>
                 </section>
