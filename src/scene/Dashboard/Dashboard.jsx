@@ -5,6 +5,7 @@ import { SportNav } from "../../components/SportNav/SportNav";
 import { Header } from "../../components/Header/Header";
 import s from "./style.module.css";
 import { DailyActivity } from "../../components/DailyActivity/DailyActivity";
+import { KPI } from "../../components/KPI/KPI";
 
 export function Dashboard({ user }) {
     const [userName, setUserName] = useState("");
@@ -43,7 +44,7 @@ export function Dashboard({ user }) {
                             <div className={s.user_trendBox}>
                                 <div className={s.user_objectives}>Objectifs</div>
                                 <div className={s.user_radar}>Radar</div>
-                                <div className={s.user_kpi}>KPI</div>
+                                <div className={s.user_kpi}>< KPI user={user} /></div>
                             </div>
                         </div>
 

@@ -8,6 +8,11 @@
     background-color: #fcfcfc;
 }
 
+.chart_title {
+    position: relative;
+    width: 40%;
+}
+
 .customTooltip {
     background-color: #E60000;
 }
@@ -59,13 +64,18 @@
 @media screen and (max-width: 1024px) {
 
     .chart_container {
-        width: 570px;
+        width: 500px;
         height: 190px;
+    }
+
+    .chart_title {
+        font-size: .9rem;
+        top: -10px;
     }
 
     .kg_container,
     .kcal_container {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         top: -8px;
     }
 }
