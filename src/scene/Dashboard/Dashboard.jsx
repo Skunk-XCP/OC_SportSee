@@ -6,6 +6,7 @@ import { Header } from "../../components/Header/Header";
 import s from "./style.module.css";
 import { DailyActivity } from "../../components/DailyActivity/DailyActivity";
 import { KPI } from "../../components/KPI/KPI";
+import { RadarStats } from "../../components/Radar/RadarStats";
 
 export function Dashboard({ user }) {
     const [userName, setUserName] = useState("");
@@ -36,19 +37,20 @@ export function Dashboard({ user }) {
                         <span className={s.user_name}>{userName}</span>
                     </h1>
                     <p className={s.support_line}>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
+
                     <div className={s.user_stats}>
                         <div className={s.user_graphs}>
-                            <div className={s.user_weight}>
-                                <DailyActivity user={user} />
-                            </div>
+                            <DailyActivity user={user} />
                             <div className={s.user_trendBox}>
-                                <div className={s.user_objectives}>Objectifs</div>
-                                <div className={s.user_radar}>Radar</div>
-                                <div className={s.user_kpi}>< KPI user={user} /></div>
+                                <RadarStats user={user} />
+                                < KPI user={user} />
                             </div>
                         </div>
 
-                        <Nutrition user={user} />
+                        <div className={s.nutritionScore}>
+
+                            <Nutrition user={user} />
+                        </div>
 
                     </div>
                 </section>
@@ -56,3 +58,7 @@ export function Dashboard({ user }) {
         </>
     )
 }
+
+// ajouter Lint
+// typer les props
+// cas d'erreur -> basculer sur mock

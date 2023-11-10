@@ -1,6 +1,6 @@
 .container {
     display: inline-block;
-    height: 100vh;
+    height: auto;
     width: 117px;
     background-color: black;
 }

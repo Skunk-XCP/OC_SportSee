@@ -7,6 +7,7 @@
     width: 100%;
     height: auto;
     margin-top: 50px;
+    margin-left: 5%;
 }
 
 .user_name_bloc {
@@ -28,14 +29,20 @@
 .user_stats {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    gap: 50px;
     margin-top: 100px;
+    height: 100vh;
+
+    /* width: ; */
+    width: 100%;
+
 }
 
 .user_graphs {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 70%;
 }
 
 .user_weight {
@@ -46,22 +53,21 @@
 .user_trendBox {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    height: 20vh;
+    justify-content: space-between;
+    height: max-content;
+    width: 100%;
     padding-top: 15px;
     margin-top: 10%;
+    gap: 20px;
 }
 
-.user_objectives,
-.user_radar,
-.user_kpi {
-    padding: 5px;
-    width: 30%;
-    height: 50%;
+.nutritionScore {
+    width: 15%;
+    margin-left: 5%;
 }
 
-/* .user_objectives {}
-
-.user_radar {}
-
-.user_kpi {} */
+@media screen and (max-width: 1024px) {
+    .user_stats {
+        height: 65vh;
+    }
+}

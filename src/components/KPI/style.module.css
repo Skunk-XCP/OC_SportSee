@@ -12,6 +12,10 @@
     left: 35px;
 }
 
+.customScore {
+    font-size: 1.5rem;
+}
+
 .customLabel {
     display: flex;
     flex-direction: column;
@@ -28,18 +32,23 @@
     border-radius: 50%;
 }
 
-.customScore {
-    font-size: 1.5rem;
-}
-
 @media screen and (max-width: 1024px) {
     .container {
-        width: 250px;
-        height: 250px;
+        width: 190px;
+        height: 190px;
     }
 
     .title {
         top: 0;
         left: 20px;
+        font-size: 0.8rem;
+    }
+
+    .customScore {
+        font-size: 1.2rem;
+    }
+
+    .customLabel {
+        font-size: 0.9rem;
     }
 }
