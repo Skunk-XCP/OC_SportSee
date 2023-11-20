@@ -3,27 +3,9 @@ import calories from "../../assets/images/nutritionIcons/calories-icon.png"
 import carbs from "../../assets/images/nutritionIcons/carbs-icon.png"
 import fat from "../../assets/images/nutritionIcons/fat-icon.png"
 import protein from "../../assets/images/nutritionIcons/protein-icon.png"
-import { DataAPI } from "../../api/APIService";
-import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 
-export function Nutrition({ user }) {
-    // On initialise le state userNutrition avec un tableau vide
-    const [userNutrition, setUserNutrition] = useState([]);
-
-    useEffect(() => {
-        async function getNutrition() {
-            try {
-                const nutritionData = await DataAPI.getUsers(user)
-
-                // On met à jour le state avec les données clés de nutrition obtenues
-                setUserNutrition(nutritionData.data.keyData);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        getNutrition();
-    }, [user]);
+export function Nutrition({ userNutrition }) {
 
     // Création d'un tableau d'objets pour cartographier les infos nutritionnelles avec des icônes
     const nutritionStats = [
@@ -48,3 +30,13 @@ export function Nutrition({ user }) {
         </div>
     )
 }
+
+// Définition des PropTypes
+Nutrition.propTypes = {
+    userNutrition: PropTypes.shape({
+        calorieCount: PropTypes.number.isRequired,
+        proteinCount: PropTypes.number.isRequired,
+        carbohydrateCount: PropTypes.number.isRequired,
+        lipidCount: PropTypes.number.isRequired,
+    }).isRequired,
+};

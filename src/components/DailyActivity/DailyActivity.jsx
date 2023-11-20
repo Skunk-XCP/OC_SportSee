@@ -1,41 +1,14 @@
 import s from "./style.module.css";
-import { DataAPI } from "../../api/APIService";
-import { USER_ACTIVITY } from "../../config.js"
-import { useEffect, useState } from "react";
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import PropTypes from 'prop-types';
 
-export function DailyActivity({ user }) {
 
-    // État pour stocker les données d'activité
-    const [activity, setActivity] = useState([]);
-
-    // Effet pour récupérer les données d'activité quand le composant est monté ou quand l'utilisateur change
-    useEffect(() => {
-
-        // Fonction pour récupérer les données d'activité
-        async function getActivity() {
-            try {
-                // Récupération de l'activité de l'utilisateur depuis l'API
-                const userActivity = await DataAPI.getDataInfos(user, USER_ACTIVITY);
-
-                // Mise à jour de l'état avec les données d'activité récupérées
-                setActivity(userActivity.data.sessions);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        // Invocation de la fonction de récupération des données
-        getActivity();
-
-        // Exécution de l'effet quand l'identifiant de l'utilisateur change
-    }, [user]);
-
-    // Composant personnalisé pour l'infobulle du graphique en barres
+export function DailyActivity({ activityData }) {
+    // Composant personnalisé pour l'infobulle du graphique
     const CustomToolTip = ({ active, payload }) => {
 
-        // Affichage de l'infobulle si elle est active et que le payload est disponible
-        if (active && payload.length) {
+        // S'affiche seulement si une barre est survolée (active) et que les données (payload) sont présentes
+        if (active && payload && payload.length) {
             return (
                 <div className={s.customTooltip}>
                     <p className={s.labelTooltip}>{`${payload[0].value}Kg`}</p>
@@ -71,7 +44,7 @@ export function DailyActivity({ user }) {
             <div className={s.chart_container}>
                 <h3 className={s.chart_title}>Activité quotidienne</h3>
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={activity} barGap={10}>
+                    <BarChart data={activityData} barGap={10}>
                         <CartesianGrid strokeDasharray="1" vertical={false} />
 
                         <XAxis
@@ -124,3 +97,14 @@ export function DailyActivity({ user }) {
         </>
     )
 }
+
+// Définition des PropTypes
+DailyActivity.propTypes = {
+    activityData: PropTypes.arrayOf(
+        PropTypes.shape({
+            day: PropTypes.string.isRequired,
+            kilogram: PropTypes.number.isRequired,
+            calories: PropTypes.number.isRequired,
+        })
+    ).isRequired,
+};

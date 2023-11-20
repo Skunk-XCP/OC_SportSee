@@ -1,8 +1,7 @@
 import s from "./style.module.css";
-import { DataAPI } from "../../api/APIService.js";
-import { useEffect, useState } from "react";
-import { USER_PERFORMANCE } from "../../config.js";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
+import PropTypes from 'prop-types';
+
 
 const translation = {
     "cardio": "cardio",
@@ -13,36 +12,31 @@ const translation = {
     "intensity": "intensité"
 }
 
-export function RadarStats({ user }) {
-    const [radarData, setRadatData] = useState([]);
+// Dico pour associer numéros avec types d'activités
+const kindValue = {
+    "1": "cardio",
+    "2": "energy",
+    "3": "endurance",
+    "4": "strength",
+    "5": "speed",
+    "6": "intensity"
+}
 
-    useEffect(() => {
-        async function getRadarData() {
-            try {
-                const userRadarData = await DataAPI.getDataInfos(user, USER_PERFORMANCE)
-                setRadatData(userRadarData.data)
-            } catch (error) {
-                console.error(error);
-            }
-        }
+const translateKind = (kindNumber) => {
+    return translation[kindValue[kindNumber]];
+};
 
-        getRadarData()
-    }, [user]);
+// Composant RadarStats qui prend en entrée les données de performance
+export function RadarStats({ performanceData }) {
 
-    const kindValue = [{
-        "1": "cardio",
-        "2": "energy",
-        "3": "endurance",
-        "4": "strength",
-        "5": "speed",
-        "6": "intensity"
-    }]
+    const dataForRadarChart = performanceData && performanceData.data.map(item => {
+        return {
+            value: item.value,
+            // Fonction translateKind pour obtenir la traduction correcte
+            kind: translateKind(item.kind.toString())
+        };
+    });
 
-    const translateKind = (number) => {
-        // Traduit le numéro en texte (ex: "1" devient "cardio")
-        const kindText = kindValue[0][number];
-        return translation[kindText];
-    };
     return (
         <>
             <div className={s.container}>
@@ -51,13 +45,12 @@ export function RadarStats({ user }) {
                         cx="50%"
                         cy="50%"
                         outerRadius="55%"
-                        data={radarData.data}
+                        data={dataForRadarChart}
                     >
                         <PolarGrid radialLines={false} />
                         <PolarAngleAxis
                             dataKey="kind"
                             tick={{ fontSize: "0.8em" }}
-                            tickFormatter={translateKind}
                             stroke="#fff"
                             axisLine={false}
                             tickLine={false}
@@ -77,3 +70,15 @@ export function RadarStats({ user }) {
     )
 }
 
+// Définition des PropTypes
+RadarStats.propTypes = {
+    performanceData: PropTypes.shape({
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                value: PropTypes.number.isRequired,
+                // Le type de performance doit être un nombre
+                kind: PropTypes.number.isRequired,
+            })
+        ).isRequired,
+    }).isRequired,
+};

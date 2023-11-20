@@ -1,39 +1,24 @@
-import { DataAPI } from "../../api/APIService";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { useEffect, useState } from "react";
 import s from "./style.module.css";
+import PropTypes from 'prop-types';
 
-export function KPI({ user }) {
-    const [userKPI, setUserKPI] = useState([]);
 
-    useEffect(() => {
-        async function getKPI() {
-            try {
-                const KPIData = await DataAPI.getUsers(user);
-                const userScore = KPIData.data.score ? KPIData.data.score : KPIData.data.todayScore;
-                setUserKPI(userScore);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        getKPI()
-    }, [user])
+export function KPI({ userScore }) {
 
     // Préparation des données pour le graphique
-    const dataScore = [{ value: userKPI }];
+    const dataScore = [{ name: 'Score', value: userScore }];
     // Angle de départ du graphique
     const startAngle = 90;
     // Angle de fin calculé en fonction du score
-    const endAngle = startAngle + userKPI * 360;
+    const endAngle = startAngle + userScore * 360;
 
     const customLabel = () => {
         // Utilisation de userKPI ou 0 si non défini
-        const score = userKPI ? userKPI : 0;
+        const score = userScore * 100;
         return (
             <>
                 <p className={s.customLabel}>
-                    <span className={s.customScore}>{`${score * 100}%`}</span>
+                    <span className={s.customScore}>{`${score.toFixed(0)}%`}</span>
                     <span>de votre</span>
                     <span>objectif</span>
                 </p>
@@ -71,3 +56,8 @@ export function KPI({ user }) {
         </>
     )
 }
+
+// Définition des PropTypes
+KPI.propTypes = {
+    userScore: PropTypes.number.isRequired
+};
