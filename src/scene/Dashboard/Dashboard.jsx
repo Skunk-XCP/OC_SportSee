@@ -8,6 +8,7 @@ import { DailyActivity } from "../../components/DailyActivity/DailyActivity";
 import { KPI } from "../../components/KPI/KPI";
 import { Nutrition } from "../../components/Nutrition/Nutrition";
 import { RadarStats } from "../../components/Radar/RadarStats";
+import { AverageSession } from "../../components/AverageSession/AverageSession";
 
 export function Dashboard({ userId }) {
     const [userData, setUserData] = useState(null);
@@ -54,7 +55,7 @@ export function Dashboard({ userId }) {
                         <div className={s.user_graphs}>
                             <DailyActivity activityData={userData.activity.sessions} />
                             <div className={s.user_trendBox}>
-                                {/* < AverageSession  /> */}
+                                < AverageSession sessionData={userData.sessions.sessions} />
                                 < RadarStats performanceData={userData.performance} />
                                 < KPI userScore={userScore} />
                             </div>
@@ -74,4 +75,3 @@ export function Dashboard({ userId }) {
 // ajouter Lint
 // cas d'erreur -> basculer sur mock
 // fichier env pour permettre de switcher entre mock et api
-// ajouter une class de modelisation pour formater les objets
