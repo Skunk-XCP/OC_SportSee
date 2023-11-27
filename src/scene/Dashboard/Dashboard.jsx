@@ -11,79 +11,63 @@ import { AverageSession } from "../../components/AverageSession/AverageSession";
 import { USER_AVERAGE, USER_PERFORMANCE, USER_ACTIVITY } from "../../config";
 
 export function Dashboard({ user }) {
-    const [userData, setUserData] = useState([]);
-    const [userScore, setUserScore] = useState([]);
-    const [session, setSession] = useState([]);
-    const [performance, setPerformance] = useState(null);
-    const [activity, setActivity] = useState(null);
-    const [userCalories, setUserCalories] = useState([])
+    // Initialise les états pour les données de l'utilisateur et les erreurs
+    const [userData, setUserData] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        // Charge les données de l'utilisateur dès le montage du composant
         async function fetchData() {
             try {
+                // Appelle l'API pour récupérer les données de l'utilisateur et les statistiques associées
                 const userInfoData = await DataAPI.getUsers(user);
-                setUserData(userInfoData.data.userInfos);
+                const userActivityData = await DataAPI.getDataInfos(user, USER_ACTIVITY);
+                const userSessionsData = await DataAPI.getDataInfos(user, USER_AVERAGE);
+                const userPerformanceData = await DataAPI.getDataInfos(user, USER_PERFORMANCE);
+
+                // Vérifie que toutes les données nécessaires sont récupérées avant de mettre à jour l'état
+                if (userInfoData.data && userActivityData.data && userSessionsData.data && userPerformanceData.data) {
+                    setUserData({
+                        ...userInfoData.data,
+                        activity: userActivityData.data.sessions,
+                        sessions: userSessionsData.data.sessions,
+                        performance: userPerformanceData.data,
+                    });
+                }
             } catch (err) {
                 console.error("Error fetching user data:", err);
                 setError(err);
             }
         }
         fetchData();
-        async function getUserScore() {
-            try {
-                const userInfoScore = await DataAPI.getUsers(user);
-                const score = userInfoScore.data.score ? userInfoScore.data.score : userInfoScore.data.todayScore;
-                setUserScore(score);
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-                setError(err);
-            }
-        }
-        getUserScore()
-        async function getUserInfos() {
-            try {
-                const userInfos = await DataAPI.getUsers(user);
-                setUserCalories(userInfos.data.keyData)
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-                setError(err);
-            }
-        }
-        getUserInfos()
-        async function fetchSession() {
-            try {
-                const userInfoSession = await DataAPI.getDataInfos(user, USER_AVERAGE);
-                setSession(userInfoSession.data);
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-                setError(err);
-            }
-        }
-        fetchSession();
-        async function fetchPerformance() {
-            try {
-                const userInfoPerformance = await DataAPI.getDataInfos(user, USER_PERFORMANCE);
-                setPerformance(userInfoPerformance.data);
-
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-                setError(err);
-            }
-        }
-        fetchPerformance();
-        async function fetchActivity() {
-            try {
-                const userInfoActivity = await DataAPI.getDataInfos(user, USER_ACTIVITY);
-                setActivity(userInfoActivity.data.sessions);
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-                setError(err);
-            }
-
-        }
-        fetchActivity();
     }, [user]);
+
+    if (!userData) return <div>Aucune donnée utilisateur disponible.</div>;
+    if (error) return <div>Erreur lors du chargement des données.</div>;
+
+    // Prépare les données pour les composants enfants
+    const userScoreData = userData.score || userData.todayScore || 0;
+    const userNutritionData = userData.keyData || {};
+
+    const activityData = userData.activity ? userData.activity.map(session => ({
+        day: session.day,
+        kilogram: session.kilogram,
+        calories: session.calories,
+    })) : [];
+
+    const sessionData = userData.sessions ? {
+        sessions: userData.sessions.map(session => ({
+            day: session.day,
+            sessionLength: session.sessionLength,
+        }))
+    } : { sessions: [] };
+
+    const performanceDataForRadar = userData.performance ? {
+        data: userData.performance.data.map(perf => ({
+            value: perf.value,
+            kind: perf.kind,
+        })),
+    } : { data: [] };
 
     return (
         <>
@@ -92,20 +76,20 @@ export function Dashboard({ user }) {
                 <SportNav />
                 <section className={s.dashboard_container}>
                     <h1 className={s.user_name_bloc}>
-                        Bonjour <span className={s.user_name}>{userData.firstName}</span>
+                        Bonjour <span className={s.user_name}>{userData ? userData.userInfos.firstName : ""}</span>
                     </h1>
                     <p className={s.support_line}>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
                     <div className={s.user_stats}>
                         <div className={s.user_graphs}>
-                            <DailyActivity activityData={activity} />
+                            <DailyActivity activityData={activityData} />
                             <div className={s.user_trendBox}>
-                                <AverageSession sessionData={session} />
-                                <RadarStats performanceData={performance} />
-                                <KPI userScore={userScore} />
+                                <AverageSession sessionData={sessionData} />
+                                <RadarStats performanceData={performanceDataForRadar} />
+                                <KPI userScore={userScoreData} />
                             </div>
                         </div>
                         <div className={s.nutritionScore}>
-                            <Nutrition userNutrition={userCalories} />
+                            <Nutrition userNutrition={userNutritionData} />
                         </div>
                     </div>
                 </section>

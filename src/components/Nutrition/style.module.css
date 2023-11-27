@@ -1,8 +1,7 @@
 .user_nutrition {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-
+    gap: 50px;
 }
 
 .nutrition_category {
@@ -11,6 +10,7 @@
     justify-content: center;
     background-color: #FBFBFB;
     height: 12.5vh;
+    width: 200px;
     border-radius: 10px;
 }
 
@@ -32,4 +32,10 @@
 
 .macronutriment {
     color: #74798C;
+}
+
+@media screen and (max-width: 1024px) {
+    .user_nutrition {
+        gap: 30px;
+    }
 }
