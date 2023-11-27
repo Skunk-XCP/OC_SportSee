@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 
 export function DailyActivity({ activityData }) {
+
     // Composant personnalisé pour l'infobulle du graphique
     const CustomToolTip = ({ active, payload }) => {
 

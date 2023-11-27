@@ -7,7 +7,7 @@ export function AverageSession({ sessionData }) {
 
     const dayLabels = ["L", "M", "M", "J", "V", "S", "D"];
 
-    const formattedSessionData = sessionData && sessionData.map((item) => ({
+    const formattedSessionData = sessionData.sessions && sessionData.sessions.map((item) => ({
         ...item,
         day: dayLabels[item.day - 1],
     }));
@@ -110,3 +110,14 @@ export function AverageSession({ sessionData }) {
         </>
     )
 }
+
+AverageSession.propTypes = {
+    sessionData: PropTypes.shape({
+        sessions: PropTypes.arrayOf(
+            PropTypes.shape({
+                day: PropTypes.number.isRequired,
+                sessionLength: PropTypes.number.isRequired,
+            })
+        ),
+    }).isRequired,
+};
