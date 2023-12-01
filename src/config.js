@@ -1,6 +1,6 @@
-const BASE_URL = "http://localhost:3000";
-const USER12_URL = `/user/12`;
-const USER18_URL = `/user/18`;
+const BASE_URL = "http://localhost:3000/user/";
+const USER12_URL = `12`;
+const USER18_URL = `18`;
 
 const USER_AVERAGE = `/average-sessions`;
 const USER_PERFORMANCE = `/performance`;

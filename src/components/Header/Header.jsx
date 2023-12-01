@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png"
 export function Header() {
     return (
         <>
-            <div className={s.container}>
+            <header className={s.container}>
                 <div className={s.logo}>
                     <img src={logo} alt="Logo SportSee" />
                 </div>
@@ -16,8 +16,7 @@ export function Header() {
                         <li className={s.item}>Communauté</li>
                     </ul>
                 </nav>
-            </div>
-
+            </header>
         </>
     )
 }

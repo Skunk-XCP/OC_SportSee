@@ -5,7 +5,7 @@ import { userMock, performanceMock, sessionMock, activityMock } from '../MockDat
 export class DataAPI {
     static async getUsers(id) {
         try {
-            const response = await axios.get(`http://localhost:3000${id}`);
+            const response = await fetchUsersAPI(id);
             return response.data;
         } catch (error) {
             console.log(error, " Erreur de réception des données depuis l'api ");
@@ -13,7 +13,7 @@ export class DataAPI {
     }
     static async getDataInfos(id, stats = null) {
         try {
-            const response = await axios.get(`${BASE_URL}${id}${stats}`);
+            const response = await fetchDataInfosAPI(id, stats);
             return response.data;
         } catch (error) {
             console.log(error, " Erreur de réception des données depuis l'api ");
@@ -21,9 +21,21 @@ export class DataAPI {
     }
 }
 
-export const fetchAPI = (userID) => {
-    return Promise.resolve(DataAPI.getUsers(userID))
+export const fetchUsersAPI = (id) => {
+    return axios.get(`${BASE_URL}${id}`);
 }
+
+export const fetchDataInfosAPI = (id, stats) => {
+    return axios.get(`${BASE_URL}${id}${stats}`);
+}
+
+
+
+
+
+
+
+
 
 export const fetchMockUserData = (userId) => {
     // Simule un appel réseau avec une promesse

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import { SportNav } from "../../components/SportNav/SportNav";
 import { Header } from "../../components/Header/Header";
 import s from "./style.module.css";
@@ -11,6 +12,7 @@ import { AverageSession } from "../../components/AverageSession/AverageSession";
 import { USER_AVERAGE, USER_PERFORMANCE, USER_ACTIVITY } from "../../config";
 
 export function Dashboard({ user }) {
+    let { id } = useParams();
     // Initialise les états pour les données de l'utilisateur et les erreurs
     const [userData, setUserData] = useState(null);
     const [error, setError] = useState(null);
@@ -20,10 +22,10 @@ export function Dashboard({ user }) {
         async function fetchData() {
             try {
                 // Appelle l'API pour récupérer les données de l'utilisateur et les statistiques associées
-                const userInfoData = await DataAPI.getUsers(user);
-                const userActivityData = await DataAPI.getDataInfos(user, USER_ACTIVITY);
-                const userSessionsData = await DataAPI.getDataInfos(user, USER_AVERAGE);
-                const userPerformanceData = await DataAPI.getDataInfos(user, USER_PERFORMANCE);
+                const userInfoData = await DataAPI.getUsers(id);
+                const userActivityData = await DataAPI.getDataInfos(id, USER_ACTIVITY);
+                const userSessionsData = await DataAPI.getDataInfos(id, USER_AVERAGE);
+                const userPerformanceData = await DataAPI.getDataInfos(id, USER_PERFORMANCE);
 
                 // Vérifie que toutes les données nécessaires sont récupérées avant de mettre à jour l'état
                 if (userInfoData.data && userActivityData.data && userSessionsData.data && userPerformanceData.data) {
@@ -40,7 +42,7 @@ export function Dashboard({ user }) {
             }
         }
         fetchData();
-    }, [user]);
+    }, [id]);
 
     if (!userData) return <div>Aucune donnée utilisateur disponible.</div>;
     if (error) return <div>Erreur lors du chargement des données.</div>;
@@ -72,7 +74,7 @@ export function Dashboard({ user }) {
     return (
         <>
             <Header />
-            <div className={s.app_container}>
+            <main className={s.app_container}>
                 <SportNav />
                 <section className={s.dashboard_container}>
                     <h1 className={s.user_name_bloc}>
@@ -93,7 +95,7 @@ export function Dashboard({ user }) {
                         </div>
                     </div>
                 </section>
-            </div>
+            </main>
         </>
     );
 }
