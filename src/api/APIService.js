@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../config";
+import { BASE_URL, USER_AVERAGE, USER_PERFORMANCE, USER_ACTIVITY } from "../config";
 import { userMock, performanceMock, sessionMock, activityMock } from '../MockData/MockData.js';
 
 export class DataAPI {
@@ -28,13 +28,13 @@ export class DataAPI {
                 let mockData;
                 switch (stats) {
                     // Sélectionne les données mockées appropriées en fonction de la stat demandée
-                    case '/average-sessions':
+                    case USER_AVERAGE:
                         mockData = sessionMock[id];
                         break;
-                    case '/performance':
+                    case USER_PERFORMANCE:
                         mockData = performanceMock[id];
                         break;
-                    case '/activity':
+                    case USER_ACTIVITY:
                         mockData = activityMock[id];
                         break;
                     default:
