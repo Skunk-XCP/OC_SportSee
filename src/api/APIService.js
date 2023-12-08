@@ -27,7 +27,7 @@ export class DataAPI {
             if (useMock) {
                 let mockData;
                 switch (stats) {
-                    // Sélectionne les données mockées appropriées en fonction de la stat demandée
+                    // Récupère le bon ensemble de données
                     case USER_AVERAGE:
                         mockData = sessionMock[id];
                         break;

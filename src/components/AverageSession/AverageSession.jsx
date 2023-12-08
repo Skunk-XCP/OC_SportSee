@@ -7,12 +7,16 @@ export function AverageSession({ sessionData }) {
 
     const dayLabels = ["L", "M", "M", "J", "V", "S", "D"];
 
+    // Vérifie que sessionData.sessions existe
     const formattedSessionData = sessionData.sessions && sessionData.sessions.map((item) => ({
         ...item,
+        // Ajoute un champs "day" coorespondant à "dayLabels"
         day: dayLabels[item.day - 1],
     }));
 
+    // Permet d'afficher un tooltip
     const CustomTooltip = ({ active, payload }) => {
+        // S'affiche si active est vrai et que payload contient des données
         if (active && payload && payload.length) {
             return (
                 <div className={s.customTooltip}>
@@ -23,6 +27,7 @@ export function AverageSession({ sessionData }) {
         return null;
     };
 
+    // Composant pour personnaliser l'affichage des étiquettes sur l'axe X
     const CustomXAxisTick = ({ x, y, payload }) => {
         return (
             <g transform={`translate(${x},${y})`}>
@@ -41,8 +46,10 @@ export function AverageSession({ sessionData }) {
         );
     };
 
+    // Etat pour stocker les infos sur la partie survolée
     const [hoveredData, setHoveredData] = useState(null);
 
+    //Met à jour hoveredData avec les coordonnées de la souris au survol
     const handleMouseMove = (event) => {
         const x = event.nativeEvent.offsetX;
         const y = event.nativeEvent.offsetY;
@@ -53,6 +60,7 @@ export function AverageSession({ sessionData }) {
 
     return (
         <>
+            {/* Gestionnaire d'événements onMouseMove */}
             <div className={s.container} onMouseMove={handleMouseMove}>
                 <div className={s.overlay}
                     style={{
