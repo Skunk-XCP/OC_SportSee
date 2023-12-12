@@ -11,7 +11,7 @@ import { RadarStats } from "../../components/Radar/RadarStats";
 import { AverageSession } from "../../components/AverageSession/AverageSession";
 import { USER_AVERAGE, USER_PERFORMANCE, USER_ACTIVITY } from "../../config";
 
-export function Dashboard({ user }) {
+export function Dashboard() {
     let { id } = useParams();
     // Initialise les états pour les données de l'utilisateur et les erreurs
     const [userData, setUserData] = useState(null);
